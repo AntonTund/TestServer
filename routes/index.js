@@ -137,6 +137,8 @@ router.get('/sethighscore', function (req, res, next) {
 
   highscores.entries.pop();
 
+  //  TODO: Save High Scores
+
   res.send(JSON.stringify(highscores));
 });
 
