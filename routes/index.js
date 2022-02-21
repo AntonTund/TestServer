@@ -137,7 +137,11 @@ router.get('/sethighscore', function (req, res, next) {
 
   highscores.entries.pop();
 
-  //  TODO: Save High Scores
+  fs.writeFile("highscore.txt", JSON.stringify(highscores), { encoding: 'utf8' }, function (err, d) {
+    if (err) {
+      console.log(`Kunde inte skriva till filen.`)
+    }
+  });
 
   res.send(JSON.stringify(highscores));
 });
