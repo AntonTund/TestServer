@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Datatest</title>
+</head>
+
+<body>
+    <form>
+        <input id="namn" placeholder="Namn"><br>
+        <input id="adress" placeholder="Adress"><br>
+        <input id="postnummer" type="number" placeholder="Postnummer"><br>
+        <input id="postort" placeholder="Postort"><br>
+    </form>
+    <button id="ändra">Ändra</button>
+    <button id="ny">Ny</button><br>
+    <input type="hidden" id="post" value="0">
+
+    <select id="personer">
+    </select>
+
+    <script>
+        fetch("http://localhost:3000/data").then(d => d.json()).then(handleData);
+
+        let data = [];
+
+        const namn = document.getElementById("namn");
+        const adress = document.getElementById("adress");
+        const postnummer = document.getElementById("postnummer");
+        const postort = document.getElementById("postort");
+
+        const ny = document.getElementById("ny");
+        const ändra = document.getElementById("ändra");
+
+        const post = document.getElementById("post");
+
+        const personer = document.getElementById("personer");
+
+        function showData(d) {
+            namn.value = d.namn;
+            adress.value = d.adress;
+            postnummer.value = d.postnummer;
+            postort.value = d.postort;
+        }
+
+        function handleData(d) {
+            data = d;
+            console.log(d);
+            showData(data[0]);
+
+            ny.onclick = nyData;
+            ändra.onclick = ändraData;
+
+            personer.onchange = visaNyData;
+
+            function visaNyData(e) {
+                post.value = e.target.value;
+
+                showData(data[e.target.value]);
+            }
+
+            let i = 0;
+            data.forEach(p => {
+                addPerson(p, i++);
+            });
+
+            function addPerson(p, n) {
+                personer.innerHTML += `<option value="${n}">${p.namn}</option>`;
+            }
+
+            function nyData() {
+                data.push({
+                    namn: namn.value,
+                    adress: adress.value,
+                    postnummer: postnummer.value,
+                    postort: postort.value
+                });
+                console.log(data);
+                fetch("http://localhost:3000/set?data=" + JSON.stringify(data));
+            }
+
+            function ändraData() {
+                p = data[post.value];
+
+                p.namn = namn.value;
+                p.adress = adress.value;
+                p.postnummer = postnummer.value;
+                p.postort = postort.value;
+
+                console.log(data);
+
+                fetch("http://localhost:3000/set?data=" + JSON.stringify(data));
+            }
+        }
+    </script>
+</body>

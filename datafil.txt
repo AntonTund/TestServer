@@ -1,0 +1,1 @@
+[{"namn":"Nisse Clock","adress":"Nisselinagatan 42","postnummer":"666","postort":"Borlänge"},{"namn":"Lasse Lassessonsss","adress":"Fobar","postnummer":"888","postort":"Borlänge"},{"namn":"Bosse Bossesson","adress":"Fobar","postnummer":"888","postort":"Borlänge"}]
