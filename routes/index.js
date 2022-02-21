@@ -143,6 +143,8 @@ router.get('/sethighscore', function (req, res, next) {
     }
   });
 
+  console.log(highscores);
+
   res.send(JSON.stringify(highscores));
 });
 
